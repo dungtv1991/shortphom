@@ -1,0 +1,168 @@
+
+//Không cần check từng đối tượng
+if (pre_dict_players.Count <= 4 && playerList[0].Cards != null)
+{
+    List<int> player0Cards = pre_dict_players[0].Cards;
+    List<int> player0ListCards = playerList[0].Cards;
+
+    List<int>[] diffLists = new List<int>[pre_dict_players.Count - 1];
+
+    for (int i = 1; i < pre_dict_players.Count; i++)
+    {
+        diffLists[i - 1] = pre_dict_players[i].Cards.Except(player0ListCards).ToList();
+    }
+
+    for (int i = 0; i < diffLists.Length; i++)
+    {
+        if (diffLists[i].Count == 1)
+        {
+            pre_dict_players[0].Cards.Add(diffLists[i].First());
+            pre_dict_players[i + 1].Cards.Remove(diffLists[i].First());
+            return;
+        }
+    }
+
+    for (int i = 1; i < pre_dict_players.Count; i++)
+    {
+        List<int> diffPlayer0ToPlayerI = pre_dict_players[i].Cards.Except(player0Cards).ToList();
+        if (diffPlayer0ToPlayerI.Count == 1)
+        {
+            pre_dict_players[0].Cards.Remove(diffPlayer0ToPlayerI[0]);
+            pre_dict_players[i].Cards.Add(diffPlayer0ToPlayerI.First());
+            return;
+        }
+    }
+}
+
+//Check từng đối tượng
+if (pre_dict_players.Count == 4 && playerList[0].Cards != null)
+{
+    List<int> player0Cards = pre_dict_players[0].Cards;
+    List<int> player1Cards = pre_dict_players[1].Cards;
+    List<int> player2Cards = pre_dict_players[2].Cards;
+    List<int> player3Cards = pre_dict_players[3].Cards;
+    List<int> player0ListCards = playerList[0].Cards;
+
+    List<int> diffPlayer0 = player0Cards.Except(player0ListCards).ToList();
+    List<int> diffPlayer1 = player1Cards.Except(player0ListCards).ToList();
+    List<int> diffPlayer2 = player2Cards.Except(player0ListCards).ToList();
+    List<int> diffPlayer3 = player3Cards.Except(player0ListCards).ToList();
+
+    if (diffPlayer0.Count == 1)
+    {
+        pre_dict_players[0].Cards.Remove(diffPlayer0[0]);
+        pre_dict_players[1].Cards.Add(diffPlayer0.First());
+    }
+    else if (diffPlayer1.Count == 1)
+    {
+        pre_dict_players[0].Cards.Add(diffPlayer1.First());
+        pre_dict_players[1].Cards.Remove(diffPlayer1[0]);
+    }
+    else if (diffPlayer2.Count == 1)
+    {
+        pre_dict_players[0].Cards.Add(diffPlayer2.First());
+        pre_dict_players[2].Cards.Remove(diffPlayer2[0]);
+    }
+    else if (diffPlayer3.Count == 1)
+    {
+        pre_dict_players[0].Cards.Add(diffPlayer3.First());
+        pre_dict_players[3].Cards.Remove(diffPlayer3[0]);
+    }
+    else
+    {
+        List<int> diffPlayer1ToPlayer0 = player0ListCards.Except(player1Cards).ToList();
+        List<int> diffPlayer2ToPlayer0 = player0ListCards.Except(player2Cards).ToList();
+        List<int> diffPlayer3ToPlayer0 = player0ListCards.Except(player3Cards).ToList();
+        List<int> diffPlayer0ToPlayer1 = player1Cards.Except(player0Cards).ToList();
+        List<int> diffPlayer0ToPlayer2 = player2Cards.Except(player0Cards).ToList();
+        List<int> diffPlayer0ToPlayer3 = player3Cards.Except(player0Cards).ToList();
+
+        if (diffPlayer1ToPlayer0.Count == 1)
+        {
+            pre_dict_players[0].Cards.Remove(diffPlayer1ToPlayer0[0]);
+            pre_dict_players[1].Cards.Add(diffPlayer1ToPlayer0.First());
+        }
+        else if (diffPlayer2ToPlayer0.Count == 1)
+        {
+            pre_dict_players[0].Cards.Remove(diffPlayer2ToPlayer0[0]);
+            pre_dict_players[2].Cards.Add(diffPlayer2ToPlayer0.First());
+        }
+        else if (diffPlayer3ToPlayer0.Count == 1)
+        {
+            pre_dict_players[0].Cards.Remove(diffPlayer3ToPlayer0[0]);
+            pre_dict_players[3].Cards.Add(diffPlayer3ToPlayer0.First());
+        }
+        else if (diffPlayer0ToPlayer1.Count == 1)
+        {
+            pre_dict_players[0].Cards.Add(diffPlayer0ToPlayer1.First());
+            pre_dict_players[1].Cards.Remove(diffPlayer0ToPlayer1[0]);
+        }
+        else if (diffPlayer0ToPlayer2.Count == 1)
+        {
+            pre_dict_players[0].Cards.Add(diffPlayer0ToPlayer2.First());
+            pre_dict_players[2].Cards.Remove(diffPlayer0ToPlayer2[0]);
+        }
+        else if (diffPlayer0ToPlayer3.Count == 1)
+        {
+            pre_dict_players[0].Cards.Add(diffPlayer0ToPlayer3.First());
+            pre_dict_players[3].Cards.Remove(diffPlayer0ToPlayer3[0]);
+        }
+    }
+}
+if (pre_dict_players.Count == 3 && playerList[0].Cards != null)
+{
+    List<int> player0Cards = pre_dict_players[0].Cards;
+    List<int> player1Cards = pre_dict_players[1].Cards;
+    List<int> player2Cards = pre_dict_players[2].Cards;
+    List<int> player0ListCards = playerList[0].Cards;
+
+    List<int> diffPlayer0 = player0Cards.Except(player0ListCards).ToList();
+    List<int> diffPlayer1 = player1Cards.Except(player0ListCards).ToList();
+    List<int> diffPlayer2 = player2Cards.Except(player0ListCards).ToList();
+
+    if (diffPlayer0.Count == 1)
+    {
+        pre_dict_players[0].Cards.Remove(diffPlayer0[0]);
+        pre_dict_players[1].Cards.Add(diffPlayer0.First());
+    }
+    else if (diffPlayer1.Count == 1)
+    {
+        pre_dict_players[0].Cards.Add(diffPlayer1.First());
+        pre_dict_players[1].Cards.Remove(diffPlayer0[0]);
+    }
+    else if (diffPlayer2.Count == 1)
+    {
+        pre_dict_players[0].Cards.Add(diffPlayer2.First());
+        pre_dict_players[2].Cards.Remove(diffPlayer0[0]);
+    }
+    else
+    {
+        List<int> diffPlayer1ToPlayer0 = player0ListCards.Except(player1Cards).ToList();
+        List<int> diffPlayer2ToPlayer0 = player0ListCards.Except(player2Cards).ToList();
+        List<int> diffPlayer0ToPlayer1 = player1Cards.Except(player0Cards).ToList();
+        List<int> diffPlayer0ToPlayer2 = player2Cards.Except(player0Cards).ToList();
+
+        if (diffPlayer1ToPlayer0.Count == 1)
+        {
+            pre_dict_players[0].Cards.Remove(diffPlayer1ToPlayer0[0]);
+            pre_dict_players[1].Cards.Add(diffPlayer1ToPlayer0.First());
+        }
+        else if (diffPlayer2ToPlayer0.Count == 1)
+        {
+            pre_dict_players[0].Cards.Remove(diffPlayer2ToPlayer0[0]);
+            pre_dict_players[2].Cards.Add(diffPlayer2ToPlayer0.First());
+        }
+        else if (diffPlayer0ToPlayer1.Count == 1)
+        {
+            pre_dict_players[0].Cards.Add(diffPlayer0ToPlayer1.First());
+            pre_dict_players[1].Cards.Remove(diffPlayer0ToPlayer1[0]);
+        }
+        else if (diffPlayer0ToPlayer2.Count == 1)
+        {
+            pre_dict_players[0].Cards.Add(diffPlayer0ToPlayer2.First());
+            pre_dict_players[2].Cards.Remove(diffPlayer0ToPlayer2[0]);
+        }
+    }
+}
+
+
